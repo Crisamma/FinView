@@ -42,36 +42,44 @@ struct ContentView: View { // 2. La tua schermata
         let massimo = entrate + uscite
         
         ZStack {
-            Color.white.ignoresSafeArea() //colore background
+            //Color.white.ignoresSafeArea() //colore background
 
             VStack(alignment: .leading) { //VStack per inserire i testi
-                
-                //Testo Saldo totale
-                Text("Saldo Totale")
-                    .bold()
-                    .italic()
-                    .font(.title)
-                    .foregroundColor(.black)
-                    .padding()
-                
-                HStack {
+                VStack(alignment: .leading) {
                     
-                    //Testo Saldo calcolato
-                    Text("\(saldoTotale)")
-                        .font(.title2)
+                    //Testo Saldo totale
+                    Text("Saldo Totale")
                         .bold()
+                        .italic()
+                        .font(.title)
                         .foregroundColor(.black)
-                        .padding(.leading)
-                        //.frame(width: 1, height: 1, alignment: .center)
+                        .padding(.top)
+                        .padding(.horizontal)
                     
-                    //Testo €
-                    Text("€")
-                        .bold()
-                        .foregroundColor(.black)
-                        .font(.title2)
+                    HStack {
+                        
+                        //Testo Saldo calcolato
+                        Text("\(saldoTotale)")
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.black)
+                            //.padding(.leading)
+                        
+                        //Testo €
+                        Text("€")
+                            .bold()
+                            .foregroundColor(.black)
+                            .font(.title2)
                         //.frame(width: 1, height: 1, alignment: .center)
                         
+                    }.padding(.bottom)
+                        .padding(.horizontal)
                 }
+                .padding(.horizontal) // ← distacco per il testo
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    Color.green.ignoresSafeArea(edges: .horizontal) // ← estende lo sfondo oltre il padding
+                )
 
                 ScrollView(.vertical, showsIndicators: true){
                     VStack(spacing: 8) {
@@ -88,8 +96,14 @@ struct ContentView: View { // 2. La tua schermata
                     }
                     .padding(.vertical, 5)
                 }
+                .padding(15)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.white)
+                        .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
+                    )
                 .frame(height: 200)
-                //.padding()
+                .padding()
                 
                 VStack(alignment: .leading, spacing: 8) {
                     //TRADE REPUBLIC
@@ -233,8 +247,13 @@ struct ContentView: View { // 2. La tua schermata
                     }.padding(.bottom, 20)
                     
                 }
-                .background(Color.green.opacity(0.2))
-                .padding(.vertical)
+                .padding(15)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.white)
+                        .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
+                    )
+                .padding()
                 
                 VStack(alignment: .leading){
                     
@@ -260,13 +279,23 @@ struct ContentView: View { // 2. La tua schermata
                         colore: .red
                     ).padding(.bottom, 20)
                 }
-                .background(Color.yellow.opacity(0.2))
+                .padding(15)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.white)
+                        .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
+                    )
                 .frame(maxWidth: .infinity, minHeight: 100, maxHeight: 200)
+                .padding()
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .padding()
-            
+            //.padding()
+            .background(
+                Image("sfondoHomePage")
+                    //.resizable()          // permette di ridimensionarla
+                    .scaledToFill()       // fa riempire l’area
+            )
             
             
         }
@@ -302,6 +331,7 @@ struct ProgressBar: View {
             }
         }
         .frame(height: 10)
+        
     }
 }
 
