@@ -24,6 +24,10 @@ struct ContentView: View { // 2. La tua schermata
     
     @State private var editingText: String = ""
     
+    @State private var entrate: Double = 75
+    @State private var uscite: Double = 100
+    
+    
     var saldoTotale: Int {isyBank + tradeRepublic + splitWise + contanti}
     
     var body: some View { // 3. La proprietà body (il contenuto visuale)
@@ -35,6 +39,7 @@ struct ContentView: View { // 2. La tua schermata
             .init(type: .carta, balance: contanti)
         ]
         
+        let massimo = entrate + uscite
         
         ZStack {
             Color.white.ignoresSafeArea() //colore background
@@ -226,10 +231,37 @@ struct ContentView: View { // 2. La tua schermata
                             isEditingContanti.toggle()
                         }
                     }.padding(.bottom, 20)
-
+                    
                 }
-                //.background(Color.green.opacity(0.2))
-                .padding(.horizontal)
+                .background(Color.green.opacity(0.2))
+                .padding(.vertical)
+                
+                VStack(alignment: .leading){
+                    
+                    HStack(){
+                        Text("Analisi delle Spese").bold().foregroundColor(.black)
+                        Spacer()
+                        Button("Vai alla sezione"){
+                            
+                        }
+                    }.padding(.vertical)
+                    
+                    Text("Entrate").bold().foregroundColor(.black)
+                    
+                    ProgressBar(
+                        valore: entrate / massimo,
+                        colore: .green
+                    ).padding(.bottom, 20)
+                    
+                    Text("Uscite").bold().foregroundColor(.black)
+                    
+                    ProgressBar(
+                        valore: uscite / massimo,
+                        colore: .red
+                    ).padding(.bottom, 20)
+                }
+                .background(Color.yellow.opacity(0.2))
+                .frame(maxWidth: .infinity, minHeight: 100, maxHeight: 200)
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -250,6 +282,27 @@ struct Activity: Identifiable {
     let id = UUID()
     let type: ActivityType
     let balance: Int
+}
+
+struct ProgressBar: View {
+    var valore: Double
+    var colore: Color
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(Color.gray.opacity(0.2))
+                    .frame(height: 10)
+                
+                Capsule()
+                    .fill(colore)
+                    .frame(width: geometry.size.width * valore,
+                           height: 10)
+            }
+        }
+        .frame(height: 10)
+    }
 }
 
 #Preview { // 4. La funzione di Anteprima (Preview)
